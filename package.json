@@ -18,6 +18,8 @@
     "@react-three/fiber": "^8.16.7",
     "framer-motion": "^11.2.10",
     "gh-pages": "^6.1.1",
+    "glob": "^10.4.2",
+    "inflight": "^1.0.6",
     "lines-and-columns": "^2.0.4",
     "maath": "^0.10.7",
     "react": "^18.2.0",
@@ -26,6 +28,7 @@
     "react-tilt": "^1.0.2",
     "react-tooltip": "^5.27.0",
     "react-vertical-timeline-component": "^3.6.0",
+    "rimraf": "^5.0.7",
     "three": "^0.165.0"
   },
   "devDependencies": {
