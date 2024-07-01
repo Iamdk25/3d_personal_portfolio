@@ -1,12 +1,12 @@
 {
-  "name": "3D_Personal_Portfolio",
-  "home page": "https://Iamdk25.github.io/3D_Personal_Portfolio",
+  "name": "3d_personal_portfolio",
+  "home page": "https://Iamdk25.github.io/3d_personal_portfolio",
   "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
