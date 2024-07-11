@@ -33,6 +33,8 @@ import DNSFinalProjectShow from "./DNSFinalProjectShow.png";
 import PortfolioWebsiteShow from "./PortfolioWebsiteShow.png";
 import LinkedInLogo from "./LinkedInLogo.png";
 import GithubLogo from "./GithubLogo.png";
+import Nischal from "./Nischal.jpeg";
+import Eric from "./Eric.jpeg";
 
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
@@ -71,6 +73,8 @@ export {
   OpenCVShow,
   DNSFinalProjectShow,
   PortfolioWebsiteShow,
+  Nischal,
+  Eric,
   sglogo,
   carrent,
   jobit,
