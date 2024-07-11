@@ -25,6 +25,8 @@ import {
     carrent,
     LinkedInLogo,
     GithubLogo,
+    Nischal,
+    Eric,
     jobit,
     tripguide,
     threejs,
@@ -181,28 +183,21 @@ import {
   const testimonials = [
     {
       testimonial:
-        "I thought it was impossible to make a website as beautiful as our product, but Rick proved me wrong.",
-      name: "Sara Lee",
-      designation: "CFO",
-      company: "Acme Co",
-      image: "https://randomuser.me/api/portraits/women/4.jpg",
+        "Divyarajsinh is a very knowledgeable and bright individual to study with. He never fails to impress me!",
+      name: "Eric Higgins",
+      designation: "Operations Analyst",
+      company: "Citi",
+      image: "src/assets/Eric.jpeg",
     },
     {
       testimonial:
-        "I've never met a web developer who truly cares about their clients' success like Rick does.",
-      name: "Chris Brown",
-      designation: "COO",
-      company: "DEF Corp",
-      image: "https://randomuser.me/api/portraits/men/5.jpg",
+        "Divyarajsinh Karmariya is an exceptional learner and a patient listener. Mentoring him, especially during his exams, I witnessed his eagerness to explore new technology and dedication to excellence. His proactive approach and curiosity make him an asset in any team.",
+      name: "Nischal Olety Nagesh",
+      designation: "Techincal Analyst Intern",
+      company: "Cummins",
+      image: "src/assets/Nischal.jpeg",
     },
-    {
-      testimonial:
-        "After Rick optimized our website, our traffic increased by 50%. We can't thank them enough!",
-      name: "Lisa Wang",
-      designation: "CTO",
-      company: "456 Enterprises",
-      image: "https://randomuser.me/api/portraits/women/6.jpg",
-    },
+    
   ];
   
   const projects = [
