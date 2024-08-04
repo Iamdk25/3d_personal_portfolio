@@ -186,8 +186,8 @@ import {
         "Divyarajsinh is a very knowledgeable and bright individual to study with. He never fails to impress me!",
       name: "Eric Higgins",
       designation: "Operations Analyst",
-      company: "Citi Bank",
-      image: "src/assets/Eric.jpeg",
+      company: "Citi",
+      image: Eric,
     },
     {
       testimonial:
@@ -195,7 +195,7 @@ import {
       name: "Nischal Olety Nagesh",
       designation: "Techincal Analyst Intern",
       company: "Cummins",
-      image: "src/assets/Nischal.jpeg",
+      image: Nischal,
     },
     
   ];
