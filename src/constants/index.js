@@ -186,7 +186,7 @@ import {
         "Divyarajsinh is a very knowledgeable and bright individual to study with. He never fails to impress me!",
       name: "Eric Higgins",
       designation: "Operations Analyst",
-      company: "Citi",
+      company: "Citi Bank",
       image: "src/assets/Eric.jpeg",
     },
     {
