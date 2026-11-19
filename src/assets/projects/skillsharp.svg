@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title">
+<title id="title">SkillSharp AI interview illustration</title>
+<defs><radialGradient id="g" cx="50%" cy="40%" r="70%"><stop stop-color="#29205c"/><stop offset="1" stop-color="#0b0d20"/></radialGradient><linearGradient id="s"><stop stop-color="#a77cff"/><stop offset="1" stop-color="#6dc5eb"/></linearGradient></defs>
+<rect width="800" height="500" rx="30" fill="url(#g)"/><g fill="none" stroke="url(#s)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><rect x="327" y="114" width="146" height="175" rx="73"/><path d="M284 237v10a116 116 0 0 0 232 0v-10M400 363v-43M350 365h100"/><path d="M190 196v50m-22-38v26m-22-18v10m464-30v50m22-38v26m22-18v10" opacity=".65"/></g></svg>

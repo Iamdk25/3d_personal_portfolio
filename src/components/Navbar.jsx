@@ -1,104 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import Glass from './Glass';
+import { publicUrl } from '../utils/publicUrl';
+import GlassSettings from './GlassSettings';
+import { useSite } from '../context/SiteContext';
 
-import { styles } from '../styles';
-import { navLinks } from '../constants';
-import { logo, menu, close } from '../assets';
+import { pulse } from '../utils/haptics';
 
+const links = [
+  ['about', 'About'], ['experience', 'Experience'], ['skills', 'Skills'],
+  ['projects', 'Projects'], ['contact', 'Contact'],
+];
 
-const Navbar = () => {
-  const [active, setActive] = useState('');
-  const [toggle, setToggle] = useState(false);
-  const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
-  const [visible, setVisible] = useState(true);
+export default function Navbar() {
+  const { motion, toggleMotion } = useSite();
+  const [panel, setPanel] = useState(null);
+  const explore = useRef(null);
+  const glass = useRef(null);
+  const menuOpen = panel === 'explore';
+  const toggle = name => setPanel(current => current === name ? null : name);
+  const close = () => setPanel(null);
+  const navigate = () => { pulse('select'); close(); };
 
-  const handleScroll = () => {
-    const currentScrollPos = window.scrollY;
-    const visible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
-
-    setVisible(visible);
-    setPrevScrollPos(currentScrollPos);
-  };
+  useLayoutEffect(() => { window.dispatchEvent(new Event('portfolio:glass')); }, [panel]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
+    if (!panel) return;
+    const outside = event => {
+      if (event.target.closest?.('[data-nav-panel]')?.dataset.navPanel !== panel) setPanel(null);
     };
-  }, [prevScrollPos, visible]);
+    const escape = event => {
+      if (event.key !== 'Escape' || event.defaultPrevented) return;
+      setPanel(null);
+      (panel === 'explore' ? explore : glass).current?.focus();
+    };
+    const desktop = window.matchMedia('(min-width: 701px)');
+    const resize = event => { if (event.matches && menuOpen) setPanel(null); };
+    document.addEventListener('pointerdown', outside, true);
+    document.addEventListener('focusin', outside);
+    document.addEventListener('keydown', escape);
+    desktop.addEventListener('change', resize);
+    return () => {
+      document.removeEventListener('pointerdown', outside, true);
+      document.removeEventListener('focusin', outside);
+      document.removeEventListener('keydown', escape);
+      desktop.removeEventListener('change', resize);
+    };
+  }, [panel, menuOpen]);
 
-  return (
-    <nav className={`px-4 md:px-8 w-full flex items-center py-5 fixed top-0 z-20 transition-opacity duration-300 ${visible ? 'opacity-100' : 'opacity-0 h-0'}`}>
-      <div className={'w-full flex justify-between items-center max-w-7xl mx-auto'}>
-        <Link
-         to="/" 
-         className='flex items-center gap-2' 
-         onClick={() => {
-          setActive("");
-          window.scrollTo(0, 0);
-         }}>
-          <img src={logo} alt="logo" style={{ cursor: "pointer", width: "50px", height: "50px"}} />
-          <p className='text-white text-[18px] font-bold cursor-pointer flex'>Divyarajsinh Karmariya &nbsp;
-          <span className='sm:block hidden'> | Full-Stack &amp; AI Engineer 
-          </span>
-          </p>
-        </Link>
-        <ul className='list-none hidden sm:flex flex-row gap-10'>
-          {navLinks.map((link) => (
-            <li
-              key={link.id}
-              className={`${active === link.title ? "text-white" : "text-secondary"} hover:text-white text-[18px] font-medium cursor-pointer`}
-              onClick={() => setActive(link.title)}
-            >
-              {link.imgSrc ? (
-                <a href={link.href} target="_blank" rel="noopener noreferrer">
-                  <img src={link.imgSrc} alt={link.title} style={{ position: "relative", top: "-15px", width: "53px", height: "50px" }} />
-                </a>
-              ) : (
-                <a href={`#${link.id}`}>{link.title}</a>
-              )}
-       
-              
-            </li>
-          ))}
-        </ul>
-        
-
-        <div className='sm:hidden flex flex-1 justify-end items-center'>
-          <img
-            src={toggle ? close : menu}
-            alt="menu"
-            className='w-[28px] h-[28px] object-contain cursor-pointer'
-            onClick={() => setToggle(!toggle)}
-          />
-
-          <div className={`${!toggle ? "hidden" : "flex"} p-6 background-gradient bg-tertiary rounded-2xl absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-2xl`}>
-            <ul className='list-none flex justify-end items-start flex-col gap-4'>
-              {navLinks.map((link) => (
-                <li
-                  key={link.id}
-                  className={`${active === link.title ? "text-white" : "text-secondary"} font-poppins font-medium cursor-pointer text-[16px]`}
-                  onClick={() => {
-                    setToggle(!toggle);
-                    setActive(link.title);
-                  }}
-                >
-                  {link.imgSrc ? (
-                    <a href={link.href} target="_blank" rel="noopener noreferrer">
-                      <img src={link.imgSrc} alt={link.title} style={{ position: "relative", left: "6px", width: "30px", height: "30px" }} />
-                    </a>
-                  ) : (
-                    <a href={`#${link.id}`}>{link.title}</a>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
+  return <header className="live-nav">
+    <a href="#top" className="live-brand" aria-label="DK, Divyarajsinh Karmariya, home" onClick={navigate}><img src={publicUrl('orbit-mark.svg')} alt="" width="54" height="54" /></a>
+    <Glass className="live-nav-content" radius={28}>
+      <nav aria-label="Main navigation">
+        <div className="desktop-links">{links.map(([id, label]) =>
+          <a key={id} href={`#${id}`} onClick={navigate}>{label}</a>
+        )}</div>
+        <button ref={explore} className="menu-toggle" type="button" data-nav-panel="explore" onClick={() => toggle('explore')}
+          aria-expanded={menuOpen} aria-controls="mobile-links">Explore <span aria-hidden="true">{menuOpen ? '−' : '+'}</span></button>
+        <div className="mobile-links" id="mobile-links" data-nav-panel="explore" hidden={!menuOpen}>
+          {links.map(([id, label]) => <a key={id} href={`#${id}`} onClick={navigate}>{label}</a>)}
         </div>
-      </div>  
-    </nav>
-  );
-};
-
-export default Navbar;
+        <GlassSettings open={panel === 'glass'} onToggle={() => toggle('glass')} triggerRef={glass} />
+        <button className="pause" type="button" onClick={() => { close(); toggleMotion(); }} aria-pressed={!motion}>{motion ? 'Pause' : 'Play'}</button>
+      </nav>
+    </Glass>
+  </header>;
+}

@@ -27,9 +27,9 @@ import gwc from "./company/gwc.png";
 import USF from "./company/USF.png";
 import veer from "./company/veer.png";
 
-import eeris from "./projects/eeris.png";
-import paal from "./projects/paal.png";
-import quantumstock from "./projects/quantumstock.png";
+import eeris from "./projects/eeris.jpg";
+import paal from "./projects/paal.jpg";
+import quantumstock from "./projects/quantumstock.jpg";
 
 import LinkedInLogo from "./LinkedInLogo.png";
 import GithubLogo from "./GithubLogo.png";
