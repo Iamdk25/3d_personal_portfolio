@@ -1,46 +1,66 @@
-# Divyarajsinh Karmariya · Interactive portfolio
+<p align="center"><img src="public/orbit-mark.svg" width="56" height="56" alt=""></p>
 
-A portfolio you can explore as a small world. The workstation opens the site, an astronaut greets you in About, and a rotating Earth sits beside the contact form. The experience timeline, projects and résumé are regular HTML, so visitors can get straight to the work.
+<h1 align="center">Interactive 3D Portfolio</h1>
 
-[Visit the portfolio](https://iamdk25.github.io/3d_personal_portfolio/) · [Browse the classic edition](https://iamdk25.github.io/portfolio-classic/)
+<p align="center">Divyarajsinh Karmariya’s work, experience and projects in an interactive star field.</p>
 
-![The portfolio opening on desktop, with the liquid sculpture, workstation and orbiting objects](docs/images/portfolio.webp)
+<p align="center">
+  <strong><a href="https://iamdk25.github.io/3d_personal_portfolio/">Explore the portfolio</a></strong> &nbsp;·&nbsp;
+  <a href="https://iamdk25.github.io/portfolio-classic/">Classic edition</a> &nbsp;·&nbsp;
+  <a href="#local-development">Run locally</a>
+</p>
 
-## Try it
+<p align="center">
+  <a href="https://github.com/Iamdk25/3d_personal_portfolio/actions/workflows/deploy.yml"><img src="https://github.com/Iamdk25/3d_personal_portfolio/actions/workflows/deploy.yml/badge.svg?branch=main" alt="GitHub Pages deployment status"></a>
+</p>
+
+[![Desktop portfolio with the interactive workstation and liquid sculpture in a star field](docs/images/portfolio.webp)](https://iamdk25.github.io/3d_personal_portfolio/)
+
+## Explore the scene
+
+Grab a satellite as it passes, pull it away from its orbit and let go. It springs back toward its moving position. On a phone, starting the same gesture in empty space scrolls the page. That distinction runs through the portfolio: each object responds where you touch it, while the writing, project links and résumé remain ordinary, navigable HTML.
 
 | Where | What to try |
 | --- | --- |
-| Opening | Move over the liquid sculpture or press it to send a ripple across its surface. Turn the workstation with a mouse, a finger or the arrow keys. |
-| About | Drag the spacesuit to inspect it. Scroll away and return to see its visor face forward again. |
-| Open space | With motion enabled, catch a drifting object, pull it across the star field and release. A damped spring takes it back to its moving orbit. Swiping between objects scrolls the page. |
-| Experience | Open a role to read the full account. Swipe through the AbbVie photos or use the carousel buttons. |
-| Skills | Turn each sphere independently. The logos follow the material and its lighting all the way around. |
-| Projects and résumé | Explore SkillSharp AI, PAAL, EERIS and QuantumStock. Open the résumé in its glass reader, zoom the page or download the PDF. |
-| Navigation | Adjust the glass blur over the moving scene. Pause motion at any time. Keyboard users can tab to controls and close open panels with Escape. |
+| Opening | Press the liquid sculpture to send a ripple across its surface. Drag the workstation to turn it, or focus it and use the arrow keys. |
+| About & experience | Turn the astronaut around, expand a role in the timeline, or swipe through the AbbVie internship photos. |
+| Skills | Rotate any of the twelve spheres. Each logo follows the curvature and lighting of its sphere. |
+| Project showcase | Explore SkillSharp AI, PAAL, EERIS and QuantumStock, then follow their project links. |
+| Glass & motion | Adjust the glass blur while objects pass behind a pane. Pause motion, or enable optional vibration on a supported touch device. |
+| Résumé | Read or zoom the document in the glass viewer, open the accessible PDF in a separate tab, or download a copy. |
 
 <table>
-<tr>
-<td width="50%" align="center"><img src="docs/images/turn-spacesuit.webp" height="320" alt="Recorded drag rotating the spacesuit from its visor to its backpack and back"></td>
-<td width="50%" align="center"><img src="docs/images/experience-mobile.webp" height="320" alt="The AbbVie timeline entry on a phone, with the Cubs game photo and carousel controls"></td>
-</tr>
-<tr><td align="center">A mouse drag on the actual 3D model</td><td align="center">The internship photo carousel on a phone-sized screen</td></tr>
+  <tr>
+    <th align="center">Rotating the spacesuit</th>
+    <th align="center">Experience on mobile</th>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><img src="docs/images/turn-spacesuit.webp" width="218" alt="A recorded drag turns the astronaut from its visor to its backpack and back"></td>
+    <td width="50%" align="center"><img src="docs/images/experience-mobile.webp" width="156" alt="AbbVie timeline entry and Cubs game photo in the mobile carousel"></td>
+  </tr>
 </table>
 
-## How it works
+## Engineering
 
-**Input and motion.** The background and foreground share hit testing so one gesture moves one object. A finger that lands on a model claims the drag before the browser starts scrolling. Open space keeps native touch scrolling. On supported touch devices, enable **Touch vibration** in the Glass panel for distinct navigation, grab, ripple and spring-release patterns. The circular pointer leaves a short fading trail, shows the available action on hover, and responds to pressure where the browser reports it. Desktop wheel scrolling uses Lenis. The initial animation setting follows the visitor’s reduced-motion preference.
+The interface is built with **React and Vite**. **Three.js and React Three Fiber** render the scenes. **Lenis** smooths desktop wheel scrolling.
 
-**Rendering.** React and Vite deliver the content first. Three.js scenes load near the viewport, stop rendering continuously offscreen, and unmount farther away. All twelve skill spheres share one canvas. The workstation has a compact texture set for small screens and data-saving connections. The spacecraft and workstation share one background Meshopt decoding worker where workers are available, and the reflective objects reuse a prefiltered studio lighting map.
+| Design decision | Implementation |
+| --- | --- |
+| Keep the first screen light | Load 3D scenes as they approach the viewport, suspend continuous rendering offscreen, and release distant scenes. Small screens and data-saving connections get a compact workstation. |
+| Keep twelve skills inexpensive | Render the entire grid with one canvas. Each sphere retains its own rotation and shares the renderer and lighting with its neighbors. |
+| Keep glass aligned with moving objects | Sample the star field in a GPU pass, soften it inside the pane boundaries, and draw the text and controls above it. |
+| Give each gesture one owner | Foreground and background models share hit testing. Pointer cues identify the available action, touch supports direct manipulation, and focusable models support arrow keys. The initial motion setting respects the visitor’s preference. |
 
-**Glass.** A GPU pass samples the star field and composites a softened image inside the visible pane boundaries. The text and controls sit above that pass. The slider changes the blur radius while objects and stars continue to move.
+<details>
+<summary>View the skill spheres</summary>
 
-**Contact and activity.** The contact form loads EmailJS on submission and offers a direct email link if delivery fails. A small Node service stores visit and résumé download-start events in SQLite. It counts page loads, including refreshes, and uses an event ID so a retried request counts once. Visible browser sessions refresh the totals every 12 seconds. The display includes the previously reported 3,000+ visits and 270 download starts.
+![Twelve individually rotatable skill spheres in a shared scene](docs/images/skills.webp)
 
-![The skills section with twelve individually rotatable technology spheres](docs/images/skills.webp)
+</details>
 
-## Run locally
+## Local development
 
-Use Node.js 22.13 or newer and npm.
+Use **Node.js 22.13 or later** and npm. The local activity service uses Node’s built-in SQLite support.
 
 ```sh
 git clone https://github.com/Iamdk25/3d_personal_portfolio.git
@@ -49,41 +69,61 @@ npm ci
 npm run dev
 ```
 
-Open the address printed by Vite with the path `/3d_personal_portfolio/`. Build and preview the production site with the following commands.
+Open the local address printed by Vite at the path `/3d_personal_portfolio/`.
 
-```sh
-npm run lint
-npm run build
-npm run preview
-```
-
-To try it on a phone on the same trusted Wi-Fi, run `npm run preview -- --host 0.0.0.0` and open the **Network** address Vite prints, including the portfolio path.
-
-## Project layout
-
-| Path | Contents |
+| Command | Purpose |
 | --- | --- |
-| `src/components/canvas/` | The star field, model framing, glass pass, liquid shader, skill materials and spring interactions |
-| `src/hooks/` | Gesture ownership, visibility, scroll progress and live activity |
-| `src/constants/` | Project descriptions, skills and expandable experience entries |
-| `public/models/`, `public/experience/`, `public/resume/` | 3D models, internship photography and the downloadable PDF |
-| `server/` | The activity endpoint shared by development, preview and a standalone production service |
-| `docs/images/` | Screenshots and a recorded interaction from the portfolio |
+| `npm run lint` | Run ESLint |
+| `npm run build` | Generate the production site in `dist/` |
+| `npm run preview` | Serve the production build locally |
+| `npm run preview -- --host 0.0.0.0` | Test the build on a phone using Vite’s network address on the same trusted Wi-Fi |
+
+### Where to make changes
+
+| Area | Location |
+| --- | --- |
+| Experience, skills and featured projects | [Content definitions](src/constants/) |
+| Models, shaders, lighting and scene interactions | [Canvas components](src/components/canvas/) |
+| Touch input, scroll behavior and visibility | [Interaction hooks](src/hooks/) |
+| Models, photos and résumé files | [Public assets](public/) |
+| Visit and download counters | [Activity service](server/) |
 
 ## Verification
 
-Chrome and WebKit were exercised with phone, tablet and desktop viewports. The Chrome layout checks spanned 320 to 2560 CSS pixels, including landscape and ultrawide. A separate stable Firefox run covered the 3D scene, keyboard controls, glass settings and résumé. Gesture tests covered touch, mouse and pen input, including switching inputs within a browser session. With WebGL disabled, the project links and résumé reader stayed usable.
+Three cold-load Lighthouse runs against the **local production build** produced the following results with simulated mobile throttling.
 
-Three cold mobile Lighthouse runs against the local production preview scored **91–92 for performance**. First content appeared at **1.7 s**, largest content at **2.6 s**, and layout shift measured **0** in each run. Total blocking time ranged from **220 to 260 ms**. These are simulated mobile lab results. Network conditions, hardware and public hosting affect the timings.
+| Mobile metric | Result |
+| --- | --- |
+| Performance score | 91–92 |
+| First / largest contentful paint | 1.7 s / 2.6 s |
+| Total blocking time | 220–260 ms |
+| Cumulative layout shift | 0 |
 
-In a phone-sized Chromium browser, four complete trips from the workstation to Earth ended with two canvases, 321 event listeners and 1,244 DOM nodes each time. The JavaScript heap after garbage collection ranged from 9.4 to 10.1 MiB. That measurement excludes GPU memory.
+Browser checks covered Chrome, WebKit and Firefox. Layout checks in Chrome spanned 320–2560 CSS pixels. Interaction checks included touch drags, mouse and pen input, keyboard navigation, reduced motion and accessing projects and the résumé with WebGL disabled.
 
-## Hosting
+## Deployment
 
-The GitHub Pages workflow builds the frontend and publishes `dist/` under `/3d_personal_portfolio/`. Public live counters require a separate HTTPS Node service with persistent storage. Run `node server/start.js` on that host, set `ACTIVITY_DB` to a file on the persistent disk, and set `SITE_ORIGIN` to the portfolio’s public origin. Set the GitHub repository Actions variable `VITE_ACTIVITY_URL` to the service URL ending in `/api/activity` before building. Local previews use their own database in `.portfolio-data/`.
+The [Pages workflow](.github/workflows/deploy.yml) builds `main` and publishes `dist/` at the original portfolio address. The [classic edition](https://github.com/Iamdk25/portfolio-classic) is hosted independently with its original models and textures.
 
-## Author and artwork
+<details>
+<summary>Contact form and optional live counters</summary>
 
-Divyarajsinh Karmariya · [GitHub](https://github.com/Iamdk25) · [LinkedIn](https://www.linkedin.com/in/dkarmariya/)
+The form loads EmailJS when a visitor submits a message. If you adapt this project, configure your own EmailJS service, template and public key in the [contact component](src/components/Contact.jsx).
 
-The workstation is adapted from Yolala1232’s Gaming Desktop PC. The Mark III spacesuit, ICECube satellite and Voyager come from NASA. Planet textures include NASA and Solar System Scope imagery. Model and texture links, licenses and adaptations are listed under **3D credits** in the site footer. [See the credits](src/components/Colophon.jsx)
+Local development and preview use a SQLite database in `.portfolio-data/`. For public live counts, run `node server/start.js` on an HTTPS-backed host with persistent storage and configure the following values.
+
+| Setting | Where | Value |
+| --- | --- | --- |
+| `ACTIVITY_DB` | Node service | Path to the persistent SQLite file |
+| `SITE_ORIGIN` | Node service | The frontend origin, such as `https://iamdk25.github.io` |
+| `VITE_ACTIVITY_URL` | GitHub Actions repository variable | The public service URL ending in `/api/activity` |
+
+Rebuild the frontend after changing the endpoint. The service counts visits, including refreshes, and résumé download starts. Event IDs prevent retries from counting twice. With the service configured, visible sessions refresh totals every 12 seconds. The static site otherwise labels the previously reported totals as historical.
+
+</details>
+
+## Credits
+
+Designed and developed by **Divyarajsinh Karmariya**. [GitHub](https://github.com/Iamdk25) · [LinkedIn](https://www.linkedin.com/in/dkarmariya/)
+
+The workstation is adapted from Yolala1232’s *Gaming Desktop PC*. The Mark III spacesuit, ICECube satellite and Voyager models come from NASA. Planet textures include NASA and Solar System Scope imagery. The portfolio’s **3D credits** list the individual sources, licenses and adaptations. [Model and artwork credits](src/components/Colophon.jsx)
