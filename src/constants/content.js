@@ -9,16 +9,28 @@ export const navLinks = [
 
 export const skillGroups = [
   {
-    title: 'Frontend & interaction',
-    skills: ['React', 'TypeScript', 'JavaScript', 'Next.js', 'HTML / CSS', 'Three.js', 'Figma', 'Swift'],
+    title: 'Languages',
+    skills: ['Java', 'Python', 'TypeScript', 'JavaScript', 'SQL', 'C#', 'C++', 'C', 'Swift', 'Bash', 'PowerShell'],
   },
   {
-    title: 'Backend & AI',
-    skills: ['Python', 'FastAPI', 'Node.js', 'PyTorch', 'LangChain', 'CrewAI', 'OpenCV'],
+    title: 'Backend & APIs',
+    skills: ['Spring Boot', 'FastAPI', 'Node.js', 'Express.js', 'REST APIs', '.NET', 'Flask', 'Pydantic', 'SQLAlchemy', 'Drizzle ORM'],
   },
   {
-    title: 'Data & delivery',
-    skills: ['PostgreSQL', 'MongoDB', 'Pinecone', 'AWS', 'Docker', 'Kubernetes', 'Git / GitHub'],
+    title: 'Frontend & graphics',
+    skills: ['React', 'Next.js', 'HTML / CSS', 'Tailwind CSS', 'Three.js', 'WebGPU', 'TanStack Router', 'Figma'],
+  },
+  {
+    title: 'AI & machine learning',
+    skills: ['PyTorch', 'TensorFlow', 'RAG', 'AI agents', 'MLOps', 'LangChain', 'CrewAI', 'FAISS', 'OpenCV', 'CUDA'],
+  },
+  {
+    title: 'Databases & analytics',
+    skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'DuckDB', 'Pinecone', 'pandas', 'NumPy', 'SciPy', 'Power BI', 'Tableau'],
+  },
+  {
+    title: 'Cloud & DevOps',
+    skills: ['AWS', 'Amazon S3', 'Azure', 'Docker', 'Kubernetes', 'Linux', 'CI/CD', 'Git / GitHub', 'Ansible', 'Vercel'],
   },
 ];
 

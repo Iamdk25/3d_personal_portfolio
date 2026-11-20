@@ -7,15 +7,15 @@ import postgresql from '../assets/tech/postgresql.png';
 import python from '../assets/tech/python.png';
 import pytorch from '../assets/tech/pytorch.png';
 import reactjs from '../assets/tech/reactjs.png';
-import tailwind from '../assets/tech/tailwind.png';
-import threejs from '../assets/tech/threejs.svg';
+import java from '../assets/tech/java.svg';
+import springboot from '../assets/tech/springboot.svg';
 import typescript from '../assets/tech/typescript.png';
 
 export const technologies = [
   { name: 'React', icon: reactjs },
   { name: 'TypeScript', icon: typescript },
-  { name: 'JavaScript', icon: javascript },
-  { name: 'Three.js', icon: threejs },
+  { name: 'Java', icon: java },
+  { name: 'Spring Boot', icon: springboot },
   { name: 'Node.js', icon: nodejs },
   { name: 'Python', icon: python },
   { name: 'PostgreSQL', icon: postgresql },
@@ -23,5 +23,5 @@ export const technologies = [
   { name: 'PyTorch', icon: pytorch },
   { name: 'AWS', icon: aws },
   { name: 'Docker', icon: docker },
-  { name: 'Tailwind', icon: tailwind },
+  { name: 'JavaScript', icon: javascript },
 ];
